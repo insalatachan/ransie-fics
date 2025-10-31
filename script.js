@@ -38,9 +38,22 @@ const drawerEl = document.getElementById('drawer');
 const drawerContent = document.getElementById('drawer-content');
 document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 document.getElementById('theme-toggle-desktop').addEventListener('click', toggleTheme);
-document.getElementById('open-drawer')?.addEventListener('click', ()=>drawerEl.setAttribute('aria-hidden','false'));
-document.getElementById('close-drawer')?.addEventListener('click', ()=>drawerEl.setAttribute('aria-hidden','true'));
-drawerEl.addEventListener('click', e=>{ if(e.target===drawerEl) drawerEl.setAttribute('aria-hidden','true'); });
+
+// ✅ Drawer behavior updated
+document.getElementById('open-drawer')?.addEventListener('click', ()=>{
+  drawerEl.setAttribute('aria-hidden','false');
+  document.body.classList.add('no-scroll');
+});
+document.getElementById('close-drawer')?.addEventListener('click', ()=>{
+  drawerEl.setAttribute('aria-hidden','true');
+  document.body.classList.remove('no-scroll');
+});
+drawerEl.addEventListener('click', e=>{
+  if(e.target===drawerEl){
+    drawerEl.setAttribute('aria-hidden','true');
+    document.body.classList.remove('no-scroll');
+  }
+});
 
 const titleEl = document.getElementById('chapter-title');
 const metaEl = document.getElementById('chapter-meta');
@@ -115,7 +128,10 @@ function makeSidebar(container){
       a.addEventListener('click', e=>{
         e.preventDefault();
         openStory(st,0);
-        if(drawerEl.getAttribute('aria-hidden')==='false') drawerEl.setAttribute('aria-hidden','true');
+        if(drawerEl.getAttribute('aria-hidden')==='false'){
+          drawerEl.setAttribute('aria-hidden','true');
+          document.body.classList.remove('no-scroll');
+        }
       });
       list.appendChild(a);
     });
