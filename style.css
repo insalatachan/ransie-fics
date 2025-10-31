@@ -86,3 +86,9 @@ footer{border-top:1px solid var(--border);padding:20px;color:var(--muted)}
   .story { padding: 10px 12px; font-size: 16px; }
 }
 
+/* Fix: drawer sopra la toolbar sticky e niente scroll sotto */
+.drawer { z-index: 100; }         /* sopra .toolbar che ha z-index:10 */
+.drawer-panel { z-index: 101; }   /* pannello ancora sopra l’overlay */
+body.no-scroll { overflow: hidden; }
+
+
